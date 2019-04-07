@@ -10,7 +10,6 @@
 *.pch
 
 # Compiled Dynamic libraries
-*.so
 *.dylib
 *.dll
 
@@ -19,9 +18,6 @@
 
 # Compiled Static libraries
 *.lai
-*.la
-*.a
-*.lib
 
 # Executables
 *.exe
@@ -29,9 +25,7 @@
 *.app
 ### CMake template
 CMakeCache.txt
-CMakeFiles
 CMakeScripts
-Makefile
 cmake_install.cmake
 install_manifest.txt
 

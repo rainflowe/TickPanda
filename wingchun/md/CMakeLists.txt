@@ -15,6 +15,8 @@
 CMAKE_MINIMUM_REQUIRED(VERSION 3.7)
 PROJECT(wingchunmd)
 
+include_directories(${CMAKE_SOURCE_DIR}/utils/cpr/include ${CMAKE_SOURCE_DIR}/utils/rapidjson/include/ ${CMAKE_SOURCE_DIR}/utils/libwebsockets/include)
+
 SET(CTP_SOURCE_FILES MDEngineCTP.cpp MDEngineCTP.h IMDEngine.cpp IMDEngine.h ../base/IEngine.cpp ../base/IEngine.h)
 ADD_LIBRARY(ctpmd SHARED ${CTP_SOURCE_FILES})
 TARGET_LINK_LIBRARIES(ctpmd journal kflog thostmduserapi ${Boost_LIBRARIES})
@@ -24,3 +26,9 @@ SET(XTP_SOURCE_FILES MDEngineXTP.cpp MDEngineXTP.h IMDEngine.cpp IMDEngine.h ../
 ADD_LIBRARY(xtpmd SHARED ${XTP_SOURCE_FILES})
 TARGET_LINK_LIBRARIES(xtpmd journal kflog xtpquoteapi ${Boost_LIBRARIES})
 INSTALL(TARGETS xtpmd DESTINATION "lib/wingchun")
+
+INSTALL(DIRECTORY ${CMAKE_SOURCE_DIR}/utils/cpr/lib/ DESTINATION "lib/wingchun")
+
+INSTALL(DIRECTORY ${CMAKE_SOURCE_DIR}/utils/zlib/lib/ DESTINATION "lib/wingchun")
+
+INSTALL(FILES ${CMAKE_SOURCE_DIR}/utils/libwebsockets/lib/libwebsockets.so.13 DESTINATION "lib/wingchun")
