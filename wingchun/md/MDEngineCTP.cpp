@@ -33,12 +33,26 @@ MDEngineCTP::MDEngineCTP(): IMDEngine(SOURCE_CTP), api(nullptr), connected(false
 	KF_LOG_DEBUG(logger, "MDEngineCTP construct");
 }
 
+MDEngineCTP::~MDEngineCTP()
+{
+    if (m_thread)
+    {
+        if(m_thread->joinable())
+        {
+            m_thread->join();
+        }
+    }
+	
+    KF_LOG_DEBUG(logger, "MDEngineCTP deconstruct");
+}
+
 void MDEngineCTP::load(const json& j_config)
 {
     broker_id = j_config[WC_CONFIG_KEY_BROKER_ID].get<string>();
     user_id = j_config[WC_CONFIG_KEY_USER_ID].get<string>();
     password = j_config[WC_CONFIG_KEY_PASSWORD].get<string>();
     front_uri = j_config[WC_CONFIG_KEY_FRONT_URI].get<string>();
+	KF_LOG_DEBUG(logger, "MDEngineCTP " << broker_id << " " << user_id);
 }
 
 void MDEngineCTP::connect(long timeout_nsec)
@@ -61,6 +75,7 @@ void MDEngineCTP::connect(long timeout_nsec)
         while (!connected && yijinjing::getNanoTime() - start_time < timeout_nsec)
         {}
     } */
+    KF_LOG_DEBUG(logger, "connect END");
     connected = true;
 }
 
@@ -189,8 +204,8 @@ void MDEngineCTP::OnRspSubMarketData(CThostFtdcSpecificInstrumentField *pSpecifi
 
 void MDEngineCTP::OnRtnDepthMarketData(CThostFtdcDepthMarketDataField *pDepthMarketData)
 {
-    auto data = parseFrom(*pDepthMarketData);
-    on_market_data(&data);
+    //auto data = parseFrom(*pDepthMarketData);
+    //on_market_data(&data);
     // if need to write raw data...
     // raw_writer->write_frame(pDepthMarketData, sizeof(CThostFtdcDepthMarketDataField),
     //                         source_id, MSG_TYPE_LF_MD_CTP, 1/*islast*/, -1/*invalidRid*/);
@@ -199,7 +214,7 @@ void MDEngineCTP::OnRtnDepthMarketData(CThostFtdcDepthMarketDataField *pDepthMar
 void MDEngineCTP::lwsEventLoop()
 {
 	LFMarketDataField data {0};
-	
+	KF_LOG_DEBUG(logger, "lwsEventLoop");
 	while(1) {
 		memset(&data, 0, sizeof(LFMarketDataField));
 		strncpy(data.ExchangeID, "guangda", sizeof(data.ExchangeID)-1);
@@ -209,7 +224,7 @@ void MDEngineCTP::lwsEventLoop()
 		KF_LOG_INFO(logger, "[lwsEventLoop]" << " (Exchange)" << data.ExchangeID
                                              << " (AskPrice1)" << data.AskPrice1);
 		on_market_data(&data);
-		sleep(10);
+		std::this_thread::sleep_for(std::chrono::seconds(10));
 	}
 
 	return;
