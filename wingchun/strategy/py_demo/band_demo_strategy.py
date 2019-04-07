@@ -24,7 +24,7 @@ by: xcao, qliu, cjiang
 '''
 
 SOURCE_INDEX = SOURCE.CTP
-M_TICKER = 'rb1801'
+M_TICKER = 'guangda'
 M_EXCHANGE = EXCHANGE.SHFE
 TRADED_VOLUME_LIMIT = 500
 
@@ -95,6 +95,9 @@ on market data,
     all market data from the source will be received. 
 '''
 def on_tick(context, md, source, rcv_time):
+	context.log_info("[FINISH] traded volume limit: " + str(md.InstrumentID) + str(md.AskPrice1))
+	return
+
     if M_TICKER == md.InstrumentID and context.td_connected:
         context.signal.TickPrice.append(md.LastPrice)
         context.md_num += 1
