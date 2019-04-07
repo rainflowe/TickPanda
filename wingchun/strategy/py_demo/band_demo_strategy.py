@@ -97,7 +97,7 @@ on market data,
 def on_tick(context, md, source, rcv_time):
 	context.log_info("[FINISH] traded volume limit: " + str(md.InstrumentID) + str(md.AskPrice1))
 	return
-
+'''
     if M_TICKER == md.InstrumentID and context.td_connected:
         context.signal.TickPrice.append(md.LastPrice)
         context.md_num += 1
@@ -159,7 +159,7 @@ def on_tick(context, md, source, rcv_time):
                                                              offset=OFFSET.CloseToday)
                     if context.rid > 0:
                         context.trade_completed = False
-
+'''
 '''
 on return trade,
     callback when trade is made.
