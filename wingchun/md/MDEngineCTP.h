@@ -45,6 +45,7 @@ public:
 public:
     MDEngineCTP();
 	void lwsEventLoop();
+	void set_reader_thread() override;
 
 private:
     /** ctp api */
