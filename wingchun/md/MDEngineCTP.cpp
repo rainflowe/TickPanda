@@ -196,7 +196,7 @@ void MDEngineCTP::OnRtnDepthMarketData(CThostFtdcDepthMarketDataField *pDepthMar
     //                         source_id, MSG_TYPE_LF_MD_CTP, 1/*islast*/, -1/*invalidRid*/);
 }
 
-void MDEngineCTP::void lwsEventLoop()
+void MDEngineCTP::lwsEventLoop()
 {
 	LFMarketDataField data {0};
 	
