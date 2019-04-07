@@ -44,6 +44,7 @@ public:
 
 public:
     MDEngineCTP();
+	 virtual ~MDEngineCTP();
 	void lwsEventLoop();
 	void set_reader_thread() override;
 
