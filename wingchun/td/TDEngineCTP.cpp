@@ -91,6 +91,7 @@ TradeAccount TDEngineCTP::load_account(int idx, const json& j_config)
 
 void TDEngineCTP::connect(long timeout_nsec)
 {
+/**
     for (size_t idx = 0; idx < account_units.size(); idx ++)
     {
         AccountUnitCTP& unit = account_units[idx];
@@ -120,10 +121,12 @@ void TDEngineCTP::connect(long timeout_nsec)
             {}
         }
     }
+	**/
 }
 
 void TDEngineCTP::login(long timeout_nsec)
 {
+/**
     for (size_t idx = 0; idx < account_units.size(); idx ++)
     {
         AccountUnitCTP& unit = account_units[idx];
@@ -181,10 +184,13 @@ void TDEngineCTP::login(long timeout_nsec)
             {}
         }
     }
+
+	**/
 }
 
 void TDEngineCTP::logout()
 {
+/**
     for (size_t idx = 0; idx < account_units.size(); idx++)
     {
         AccountUnitCTP& unit = account_units[idx];
@@ -205,10 +211,12 @@ void TDEngineCTP::logout()
         unit.settle_confirmed = false;
         unit.logged_in = false;
     }
+	**/
 }
 
 void TDEngineCTP::release_api()
 {
+/**
     for (auto& unit: account_units)
     {
         if (unit.api != nullptr)
@@ -223,25 +231,30 @@ void TDEngineCTP::release_api()
         unit.logged_in = false;
         unit.api = nullptr;
     }
+	**/
 }
 
 bool TDEngineCTP::is_logged_in() const
 {
+/**
     for (auto& unit: account_units)
     {
         if (!unit.logged_in || (need_settleConfirm && !unit.settle_confirmed))
             return false;
     }
+	**/
     return true;
 }
 
 bool TDEngineCTP::is_connected() const
 {
+/**
     for (auto& unit: account_units)
     {
         if (!unit.connected)
             return false;
     }
+	**/
     return true;
 }
 
@@ -288,10 +301,12 @@ void TDEngineCTP::req_order_insert(const LFInputOrderField* data, int account_in
                                               << " (Tid)" << req.InstrumentID
                                               << " (OrderRef)" << req.OrderRef);
 
+	/**
     if (account_units[account_index].api->ReqOrderInsert(&req, requestId))
     {
         KF_LOG_ERROR(logger, "[request] order insert failed!" << " (rid)" << requestId);
     }
+	**/
     send_writer->write_frame(&req, sizeof(CThostFtdcInputOrderField), source_id, MSG_TYPE_LF_ORDER_CTP, 1/*ISLAST*/, requestId);
 }
 
