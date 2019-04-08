@@ -96,16 +96,16 @@ on market data,
 '''
 def on_tick(context, md, source, rcv_time):
 	context.log_info("[FINISH] traded volume limit: " + str(md.InstrumentID) + str(md.AskPrice1))
-	
-    context.rid = context.insert_limit_order(source=SOURCE_INDEX,
-                                             ticker=md.InstrumentID,
-                                             exchange_id=M_EXCHANGE,
-                                             price = md.AskPrice1,
-                                             volume=context.signal.trade_size,
-                                             direction=DIRECTION.Buy,
-                                             offset=OFFSET.Open)
-    return                                            
-
+'''
+	context.rid = context.insert_limit_order(source=SOURCE_INDEX,
+										 ticker=md.InstrumentID,
+										 exchange_id=M_EXCHANGE,
+										 price = md.AskPrice1,
+										 volume=context.signal.trade_size,
+										 direction=DIRECTION.Buy,
+										 offset=OFFSET.Open)
+	return                                         
+'''
     
 '''
     if M_TICKER == md.InstrumentID and context.td_connected:
