@@ -90,6 +90,7 @@ bool IEngine::try_login()
     {
         connect(CONNECT_TIMEOUT_NANO_SECONDS);
     }
+	KF_LOG_INFO(logger, "try_login connect:"  << is_connected());
     WRITE_ENGINE_STATUS(is_connected() ? WC_ENGINE_STATUS_CONNECTED: WC_ENGINE_STATUS_CONNECT_FAIL);
     if (is_connected() && !is_logged_in())
     {

@@ -63,8 +63,8 @@ void MDEngineCTP::connect(long timeout_nsec)
         {}
     }
 	
-	connected = true;
 	KF_LOG_INFO(logger, "[request] connect end");
+	//connected = true;
 }
 
 void MDEngineCTP::login(long timeout_nsec)
