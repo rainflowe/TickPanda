@@ -57,7 +57,6 @@ void MDEngineCTP::connect(long timeout_nsec)
     {
         api->RegisterFront((char*)front_uri.c_str());
         api->Init();
-		api->SubscribeMarketData();
         long start_time = yijinjing::getNanoTime();
         while (!connected && yijinjing::getNanoTime() - start_time < timeout_nsec)
         {}
