@@ -30,20 +30,6 @@ USING_WC_NAMESPACE
 MDEngineCTP::MDEngineCTP(): IMDEngine(SOURCE_CTP), api(nullptr), connected(false), logged_in(false), reqId(0)
 {
     logger = yijinjing::KfLog::getLogger("MdEngine.CTP");
-	KF_LOG_DEBUG(logger, "MDEngineCTP construct");
-}
-
-MDEngineCTP::~MDEngineCTP()
-{
-    if (m_thread)
-    {
-        if(m_thread->joinable())
-        {
-            m_thread->join();
-        }
-    }
-	
-    KF_LOG_DEBUG(logger, "MDEngineCTP deconstruct");
 }
 
 void MDEngineCTP::load(const json& j_config)
@@ -52,12 +38,10 @@ void MDEngineCTP::load(const json& j_config)
     user_id = j_config[WC_CONFIG_KEY_USER_ID].get<string>();
     password = j_config[WC_CONFIG_KEY_PASSWORD].get<string>();
     front_uri = j_config[WC_CONFIG_KEY_FRONT_URI].get<string>();
-	KF_LOG_DEBUG(logger, "MDEngineCTP " << broker_id << " " << user_id);
 }
 
 void MDEngineCTP::connect(long timeout_nsec)
 {
-/*
     if (api == nullptr)
     {
         api = CThostFtdcMdApi::CreateFtdcMdApi();
@@ -74,14 +58,11 @@ void MDEngineCTP::connect(long timeout_nsec)
         long start_time = yijinjing::getNanoTime();
         while (!connected && yijinjing::getNanoTime() - start_time < timeout_nsec)
         {}
-    } */
-    KF_LOG_DEBUG(logger, "connect END");
-    connected = true;
+    }
 }
 
 void MDEngineCTP::login(long timeout_nsec)
 {
-/**
     if (!logged_in)
     {
         CThostFtdcReqUserLoginField req = {};
@@ -97,13 +78,10 @@ void MDEngineCTP::login(long timeout_nsec)
         while (!logged_in && yijinjing::getNanoTime() - start_time < timeout_nsec)
         {}
     }
-	**/
-	logged_in = true;
 }
 
 void MDEngineCTP::logout()
 {
-/**S
     if (logged_in)
     {
         CThostFtdcUserLogoutField req = {};
@@ -115,31 +93,26 @@ void MDEngineCTP::logout()
                                                             << " (Uid)" << req.UserID);
         }
     }
-	**/
     connected = false;
     logged_in = false;
 }
 
 void MDEngineCTP::release_api()
 {
-/**
     if (api != nullptr)
     {
         api->Release();
         api = nullptr;
     }
-**/
 }
 
 void MDEngineCTP::subscribeMarketData(const vector<string>& instruments, const vector<string>& markets)
 {
-/**
     int nCount = instruments.size();
     char* insts[nCount];
     for (int i = 0; i < nCount; i++)
         insts[i] = (char*)instruments[i].c_str();
     api->SubscribeMarketData(insts, nCount);
-	**/
 }
 
 /*
@@ -204,37 +177,11 @@ void MDEngineCTP::OnRspSubMarketData(CThostFtdcSpecificInstrumentField *pSpecifi
 
 void MDEngineCTP::OnRtnDepthMarketData(CThostFtdcDepthMarketDataField *pDepthMarketData)
 {
-    //auto data = parseFrom(*pDepthMarketData);
-    //on_market_data(&data);
+    auto data = parseFrom(*pDepthMarketData);
+    on_market_data(&data);
     // if need to write raw data...
     // raw_writer->write_frame(pDepthMarketData, sizeof(CThostFtdcDepthMarketDataField),
     //                         source_id, MSG_TYPE_LF_MD_CTP, 1/*islast*/, -1/*invalidRid*/);
-}
-
-void MDEngineCTP::lwsEventLoop()
-{
-	LFMarketDataField data {0};
-	KF_LOG_DEBUG(logger, "lwsEventLoop");
-	while(1) {
-		memset(&data, 0, sizeof(LFMarketDataField));
-		strncpy(data.ExchangeID, "guangda", sizeof(data.ExchangeID)-1);
-		strncpy(data.InstrumentID, "guangda", sizeof(data.InstrumentID)-1);
-		data.AskPrice1 = 1.0;
-		data.AskVolume1 = 200;
-		KF_LOG_INFO(logger, "[lwsEventLoop]" << " (Exchange)" << data.ExchangeID
-                                             << " (AskPrice1)" << data.AskPrice1);
-		on_market_data(&data);
-		std::this_thread::sleep_for(std::chrono::seconds(10));
-	}
-
-	return;
-}
-
-void MDEngineCTP::set_reader_thread()
-{
-    IMDEngine::set_reader_thread();
-    m_thread = ThreadPtr(new std::thread(boost::bind(&MDEngineCTP::lwsEventLoop, this)));
-	return;
 }
 
 BOOST_PYTHON_MODULE(libctpmd)

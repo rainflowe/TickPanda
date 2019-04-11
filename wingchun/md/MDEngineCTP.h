@@ -28,7 +28,7 @@
 
 WC_NAMESPACE_START
 
-class MDEngineCTP: public IMDEngine//, public CThostFtdcMdSpi
+class MDEngineCTP: public IMDEngine, public CThostFtdcMdSpi
 {
 public:
     /** load internal information from config json */
@@ -44,9 +44,6 @@ public:
 
 public:
     MDEngineCTP();
-	 virtual ~MDEngineCTP();
-	void lwsEventLoop();
-	void set_reader_thread() override;
 
 private:
     /** ctp api */
@@ -60,7 +57,6 @@ private:
     bool connected;
     bool logged_in;
     int  reqId;
-	ThreadPtr  m_thread;
 
 public:
     // SPI
