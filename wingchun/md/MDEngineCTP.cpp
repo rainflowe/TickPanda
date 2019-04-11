@@ -66,6 +66,8 @@ void MDEngineCTP::connect(long timeout_nsec)
 
 void MDEngineCTP::login(long timeout_nsec)
 {
+	KF_LOG_INFO(logger, "[login]");
+
     if (!logged_in)
     {
     	KF_LOG_ERROR(logger, "[request] login begin...");
@@ -86,6 +88,8 @@ void MDEngineCTP::login(long timeout_nsec)
 
 void MDEngineCTP::logout()
 {
+	KF_LOG_INFO(logger, "[logout]");
+
     if (logged_in)
     {
         CThostFtdcUserLogoutField req = {};
@@ -103,6 +107,8 @@ void MDEngineCTP::logout()
 
 void MDEngineCTP::release_api()
 {
+	KF_LOG_INFO(logger, "[release_api]");
+
     if (api != nullptr)
     {
         api->Release();
@@ -112,6 +118,8 @@ void MDEngineCTP::release_api()
 
 void MDEngineCTP::subscribeMarketData(const vector<string>& instruments, const vector<string>& markets)
 {
+	KF_LOG_INFO(logger, "[subscribeMarketData]");
+
     int nCount = instruments.size();
     char* insts[nCount];
     for (int i = 0; i < nCount; i++)
