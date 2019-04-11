@@ -45,8 +45,10 @@ void MDEngineCTP::connect(long timeout_nsec)
     if (api == nullptr)
     {
         api = CThostFtdcMdApi::CreateFtdcMdApi();
+		KF_LOG_ERROR(logger, "[request] connect begin...");
         if (!api)
         {
+        	KF_LOG_ERROR(logger, "[request] connect failed!");
             throw std::runtime_error("CTP_MD failed to create api");
         }
         api->RegisterSpi(this);
@@ -65,6 +67,7 @@ void MDEngineCTP::login(long timeout_nsec)
 {
     if (!logged_in)
     {
+    	KF_LOG_ERROR(logger, "[request] login begin...");
         CThostFtdcReqUserLoginField req = {};
         strcpy(req.BrokerID, broker_id.c_str());
         strcpy(req.UserID, user_id.c_str());
