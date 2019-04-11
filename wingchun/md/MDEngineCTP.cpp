@@ -62,6 +62,8 @@ void MDEngineCTP::connect(long timeout_nsec)
         while (!connected && yijinjing::getNanoTime() - start_time < 10000000000)
         {}
     }
+	
+	connected = true;
 	KF_LOG_INFO(logger, "[request] connect end");
 }
 
