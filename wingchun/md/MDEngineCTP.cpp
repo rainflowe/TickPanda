@@ -59,7 +59,7 @@ void MDEngineCTP::connect(long timeout_nsec)
         api->Init();
         long start_time = yijinjing::getNanoTime();
 		KF_LOG_INFO(logger, "[request] connect timeout " << timeout_nsec);
-        while (!connected && yijinjing::getNanoTime() - start_time < 100)
+        while (!connected && yijinjing::getNanoTime() - start_time < 10000000000)
         {}
     }
 	KF_LOG_INFO(logger, "[request] connect end");
