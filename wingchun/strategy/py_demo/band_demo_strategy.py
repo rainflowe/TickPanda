@@ -24,7 +24,7 @@ by: xcao, qliu, cjiang
 '''
 
 SOURCE_INDEX = SOURCE.CTP
-M_TICKER = 'guangda'
+M_TICKER = 'rb1801'
 M_EXCHANGE = EXCHANGE.SHFE
 TRADED_VOLUME_LIMIT = 500
 
@@ -95,19 +95,8 @@ on market data,
     all market data from the source will be received. 
 '''
 def on_tick(context, md, source, rcv_time):
-	context.log_info("[FINISH] traded volume limit: " + str(md.InstrumentID) + str(md.AskPrice1))
-
-	context.insert_limit_order(source=SOURCE_INDEX,
-										 ticker=md.InstrumentID,
-										 exchange_id=M_EXCHANGE,
-										 price = md.AskPrice1,
-										 volume=context.signal.trade_size,
-										 direction=DIRECTION.Buy,
-										 offset=OFFSET.Open)
-	return                                    
-
-    
-'''
+    context.log_info("[FINISH] traded volume limit: " + str(md.InstrumentID))
+    return
     if M_TICKER == md.InstrumentID and context.td_connected:
         context.signal.TickPrice.append(md.LastPrice)
         context.md_num += 1
@@ -169,7 +158,7 @@ def on_tick(context, md, source, rcv_time):
                                                              offset=OFFSET.CloseToday)
                     if context.rid > 0:
                         context.trade_completed = False
-'''
+
 '''
 on return trade,
     callback when trade is made.

@@ -166,6 +166,8 @@ void MDEngineCTP::OnRspUserLogout(CThostFtdcUserLogoutField *pUserLogout, CThost
 
 void MDEngineCTP::OnRspSubMarketData(CThostFtdcSpecificInstrumentField *pSpecificInstrument, CThostFtdcRspInfoField *pRspInfo, int nRequestID, bool bIsLast)
 {
+
+	KF_LOG_INFO(logger, "[OnRspSubMarketData] Return");
     if (pRspInfo != nullptr && pRspInfo->ErrorID != 0)
     {
         KF_LOG_ERROR(logger, "[OnRspSubMarketData]" << " (errID)" << pRspInfo->ErrorID
@@ -177,6 +179,7 @@ void MDEngineCTP::OnRspSubMarketData(CThostFtdcSpecificInstrumentField *pSpecifi
 
 void MDEngineCTP::OnRtnDepthMarketData(CThostFtdcDepthMarketDataField *pDepthMarketData)
 {
+	KF_LOG_INFO(logger, "[OnRtnDepthMarketData] Return");
     auto data = parseFrom(*pDepthMarketData);
     on_market_data(&data);
     // if need to write raw data...
