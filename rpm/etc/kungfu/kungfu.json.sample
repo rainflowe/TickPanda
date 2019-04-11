@@ -3,10 +3,10 @@
   {
     "ctp":
     {
-      "FrontUri": "tcp://180.168.212.228:41213",
-      "UserId": "YOUR_USER_ID",
-      "BrokerId": "YOUR_BROKER_ID",
-      "Password": "YOUR_PASSWORD"
+      "FrontUri": "tcp://118.25.217.226:41213",
+      "UserId": "13530711239",
+      "BrokerId": "9999",
+      "Password": "123456"
     },
     "xtp":
     {
