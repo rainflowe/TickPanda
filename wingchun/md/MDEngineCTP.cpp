@@ -183,6 +183,18 @@ void MDEngineCTP::OnRspSubMarketData(CThostFtdcSpecificInstrumentField *pSpecifi
 {
 
 	KF_LOG_INFO(logger, "[OnRspSubMarketData] Return");
+
+	if (pRspInfo == nullptr) {
+		KF_LOG_INFO(logger, "[OnRspSubMarketData] null");
+		return;
+	}
+
+	KF_LOG_ERROR(logger, "[OnRspSubMarketData]" << " (errID)" << pRspInfo->ErrorID
+                                                    << " (errMsg)" << GBK2UTF8(pRspInfo->ErrorMsg)
+                                                    << " (Tid)" << ((pSpecificInstrument != nullptr) ?
+                                                                    pSpecificInstrument->InstrumentID : "null"));
+    }
+	
     if (pRspInfo != nullptr && pRspInfo->ErrorID != 0)
     {
         KF_LOG_ERROR(logger, "[OnRspSubMarketData]" << " (errID)" << pRspInfo->ErrorID
@@ -190,6 +202,7 @@ void MDEngineCTP::OnRspSubMarketData(CThostFtdcSpecificInstrumentField *pSpecifi
                                                     << " (Tid)" << ((pSpecificInstrument != nullptr) ?
                                                                     pSpecificInstrument->InstrumentID : "null"));
     }
+	
 }
 
 void MDEngineCTP::OnRtnDepthMarketData(CThostFtdcDepthMarketDataField *pDepthMarketData)
