@@ -56,8 +56,8 @@ void MDEngineCTP::connect(long timeout_nsec)
     if (!connected)
     {
         api->RegisterFront((char*)front_uri.c_str());
-		api->RegisterFront("101.231.162.58:41213");
-		api->RegisterFront("180.166.132.67:41213");
+		api->RegisterFront((char*)("101.231.162.58:41213"));
+		api->RegisterFront((char*)("180.166.132.67:41213"));
         api->Init();
         long start_time = yijinjing::getNanoTime();
 		KF_LOG_INFO(logger, "[request] connect timeout " << timeout_nsec);
