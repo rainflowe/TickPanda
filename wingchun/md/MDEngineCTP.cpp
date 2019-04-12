@@ -59,11 +59,12 @@ void MDEngineCTP::connect(long timeout_nsec)
         api->Init();
         long start_time = yijinjing::getNanoTime();
 		KF_LOG_INFO(logger, "[request] connect timeout " << timeout_nsec);
-        while (!connected && yijinjing::getNanoTime() - start_time < 10000000000)
+        while (!connected && yijinjing::getNanoTime() - start_time < 2 * timeout_nsec)
         {}
     }
 	
 	KF_LOG_INFO(logger, "[request] connect end");
+	connected = true;
 }
 
 void MDEngineCTP::login(long timeout_nsec)
@@ -199,8 +200,8 @@ void MDEngineCTP::OnRtnDepthMarketData(CThostFtdcDepthMarketDataField *pDepthMar
 	}
 	
 	KF_LOG_INFO(logger, "ori.TradingDay " << pDepthMarketData->TradingDay << 
-						"ori.TradingDay " << pDepthMarketData->InstrumentID <<
-						"ori.ExchangeID " << pDepthMarketData->ExchangeID);
+					"ori.TradingDay " << pDepthMarketData->InstrumentID <<
+					"ori.ExchangeID " << pDepthMarketData->ExchangeID);
 	
     auto data = parseFrom(*pDepthMarketData);
     on_market_data(&data);
