@@ -95,8 +95,10 @@ on market data,
     all market data from the source will be received. 
 '''
 def on_tick(context, md, source, rcv_time):
-    context.log_info("[FINISH] traded volume limit: " + str(md.InstrumentID))
+    context.log_info("[FINISH] traded volume limit: ")
+    context.log_info("[FINISH] traded volume limit: " + md.InstrumentID)
     return
+    
     if M_TICKER == md.InstrumentID and context.td_connected:
         context.signal.TickPrice.append(md.LastPrice)
         context.md_num += 1
