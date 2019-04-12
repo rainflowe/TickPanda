@@ -193,7 +193,6 @@ void MDEngineCTP::OnRspSubMarketData(CThostFtdcSpecificInstrumentField *pSpecifi
                                                     << " (errMsg)" << GBK2UTF8(pRspInfo->ErrorMsg)
                                                     << " (Tid)" << ((pSpecificInstrument != nullptr) ?
                                                                     pSpecificInstrument->InstrumentID : "null"));
-    }
 	
     if (pRspInfo != nullptr && pRspInfo->ErrorID != 0)
     {
