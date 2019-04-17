@@ -164,7 +164,7 @@ void TDEngineCTP::login(long timeout_nsec)
 			KF_LOG_INFO(logger, "[request] login BEGIN!" << " (Bid)" << req.BrokerID
                                                                << " (Uid)" << req.UserID
                                                                << " (Pwd)" << req.Password);
-            if (unit.api->ReqUserLogin2(&req, request_id++))
+            if (unit.api->ReqUserLogin(&req, request_id++))
             {
                 KF_LOG_ERROR(logger, "[request] login failed!" << " (Bid)" << req.BrokerID
                                                                << " (Uid)" << req.UserID);
