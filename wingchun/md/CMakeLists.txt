@@ -19,7 +19,7 @@ include_directories(${CMAKE_SOURCE_DIR}/utils/cpr/include ${CMAKE_SOURCE_DIR}/ut
 
 SET(CTP_SOURCE_FILES MDEngineCTP.cpp MDEngineCTP.h IMDEngine.cpp IMDEngine.h ../base/IEngine.cpp ../base/IEngine.h)
 ADD_LIBRARY(ctpmd SHARED ${CTP_SOURCE_FILES})
-TARGET_LINK_LIBRARIES(ctpmd journal kflog thostmduserapi_se ${Boost_LIBRARIES})
+TARGET_LINK_LIBRARIES(ctpmd journal kflog thostmduserapi ${Boost_LIBRARIES})
 INSTALL(TARGETS ctpmd DESTINATION "lib/wingchun")
 
 SET(XTP_SOURCE_FILES MDEngineXTP.cpp MDEngineXTP.h IMDEngine.cpp IMDEngine.h ../base/IEngine.cpp ../base/IEngine.h)
