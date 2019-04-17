@@ -156,11 +156,14 @@ void TDEngineCTP::login(long timeout_nsec)
         if (!unit.logged_in)
         {
             struct CThostFtdcReqUserLoginField req = {};
-            strcpy(req.TradingDay, "");
+            //strcpy(req.TradingDay, "");
             strcpy(req.UserID, account.UserID);
             strcpy(req.BrokerID, account.BrokerID);
             strcpy(req.Password, account.Password);
             unit.login_rid = request_id;
+			KF_LOG_INFO(logger, "[request] login BEGIN!" << " (Bid)" << req.BrokerID
+                                                               << " (Uid)" << req.UserID
+                                                               << " (Pwd)" << req.Password);
             if (unit.api->ReqUserLogin(&req, request_id++))
             {
                 KF_LOG_ERROR(logger, "[request] login failed!" << " (Bid)" << req.BrokerID
