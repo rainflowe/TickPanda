@@ -56,7 +56,7 @@ def initialize(context):
     context.add_td(source=SOURCE_INDEX)
     context.subscribe([M_TICKER], source=SOURCE_INDEX)
     # necessary initialization of internal fields.
-    context.td_connected = False
+    context.td_connected = True
     context.trade_completed = True
     context.md_num = 0
     context.traded_volume = 0
