@@ -97,7 +97,7 @@ on market data,
 def on_tick(context, md, source, rcv_time):
     context.log_info("[FINISH] traded volume limit: ")
     context.log_info("[FINISH] traded volume limit: " + md.InstrumentID)
-    return
+    #return
     
     if M_TICKER == md.InstrumentID and context.td_connected:
         context.signal.TickPrice.append(md.LastPrice)
@@ -116,17 +116,23 @@ def on_tick(context, md, source, rcv_time):
         ExitCondition = (upper_band[-1] > md.LastPrice) and (lower_band[-1] < md.LastPrice)
         #============ generate signal ============
         if context.trade_completed:
-            if LongEntryCondition and not context.signal.has_open_position:
+            if True:
+                context.log_debug("[insert_limit_order] (tick_price){} (upper_band){} (lower_band){}".format(
+                            tick_price, upper_band, lower_band))
+
                 context.rid = context.insert_limit_order(source=SOURCE_INDEX,
                                                          ticker=md.InstrumentID,
                                                          exchange_id=M_EXCHANGE,
-                                                         price = md.UpperLimitPrice,
+                                                         price = md.UpperLimitPrice - 100,
                                                          volume=context.signal.trade_size,
                                                          direction=DIRECTION.Buy,
                                                          offset=OFFSET.Open)
                 if context.rid > 0:
                     context.trade_completed = False
+                    context.log_info("[insert_limit_order] order: " + str(TRADED_VOLUME_LIMIT))
+                    return
 
+            return
             if ShortEntryCondition and not context.signal.has_open_position:
                 context.rid = context.insert_limit_order(source=SOURCE_INDEX,
                                                          ticker=md.InstrumentID,
