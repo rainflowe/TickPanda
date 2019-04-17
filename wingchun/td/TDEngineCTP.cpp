@@ -120,6 +120,8 @@ void TDEngineCTP::connect(long timeout_nsec)
             long start_time = yijinjing::getNanoTime();
             while (!unit.connected && yijinjing::getNanoTime() - start_time < timeout_nsec)
             {}
+			KF_LOG_INFO(logger, "[connect] connect set success!");
+			account_units[curAccountIdx].connected = true;
         }
     }
 }
