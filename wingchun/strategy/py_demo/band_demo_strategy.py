@@ -104,8 +104,8 @@ def on_tick(context, md, source, rcv_time):
         context.md_num += 1
         #print context.md_num,
         context.log_debug("[context.md_num] (md_num){} look_back){})".format(context.md_num, context.signal.look_back))
-        if context.md_num < context.signal.look_back + 2:
-            return
+        #if context.md_num < context.signal.look_back + 2:
+            #return
         #============ prepare data ============
         tick_price = np.array(context.signal.TickPrice)
         upper_band = rolling_max(tick_price, period=context.signal.param1)
