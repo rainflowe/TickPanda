@@ -124,13 +124,20 @@ def on_tick(context, md, source, rcv_time):
                 context.rid = context.insert_limit_order(source=SOURCE_INDEX,
                                                          ticker=md.InstrumentID,
                                                          exchange_id=M_EXCHANGE,
-                                                         price = md.UpperLimitPrice - 100,
+                                                         price = md.LowerLimitPrice,
                                                          volume=context.signal.trade_size,
                                                          direction=DIRECTION.Buy,
                                                          offset=OFFSET.Open)
                 if context.rid > 0:
                     context.trade_completed = False
-                    context.log_info("[insert_limit_order] order: " + str(TRADED_VOLUME_LIMIT))
+                    context.log_info("[insert_limit_order] order: " + str(md.LowerLimitPrice))
+
+					print("context.order_rid:", context.order_rid)
+					print('will cancel it')
+					import time
+					time.sleep(6)
+					context.cancel_id = context.cancel_order(source=SOURCE_INDEX, order_id=context.rid)
+					print 'cancel (order_id)', context.rid, ' (request_id)', context.cancel_id
                     return
 
             return
