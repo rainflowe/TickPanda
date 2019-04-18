@@ -132,7 +132,7 @@ def on_tick(context, md, source, rcv_time):
                     context.trade_completed = False
                     context.log_info("[insert_limit_order] order: " + str(md.LowerLimitPrice))
 
-					print("context.order_rid:", context.order_rid)
+					print("context.order_rid:", context.rid)
 					print('will cancel it')
 					import time
 					time.sleep(6)
