@@ -96,7 +96,7 @@ on market data,
     all market data from the source will be received. 
 '''
 def on_tick(context, md, source, rcv_time):
-    context.log_info("[FINISH] traded volume limit: ")
+    context.log_info("[FINISH] traded volume limit: " + str(md.LowerLimitPrice))
     context.log_info("[FINISH] traded volume limit: " + md.InstrumentID)
     #return
     
