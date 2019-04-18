@@ -132,7 +132,7 @@ def on_tick(context, md, source, rcv_time):
                 if context.rid > 0:
 					context.trade_completed = False
 					context.log_info("[insert_limit_order] order: " + str(md.LowerLimitPrice))
-					context.log_info("context.order_rid:" + context.rid)
+					context.log_info("context.order_rid:" + str(context.rid))
 					context.log_info("will cancel it")
 					time.sleep(6)
 					context.cancel_id = context.cancel_order(source=SOURCE_INDEX, order_id=context.rid)
