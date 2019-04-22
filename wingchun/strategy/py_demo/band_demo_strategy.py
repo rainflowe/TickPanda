@@ -17,6 +17,7 @@ limitations under the License.
 import numpy as np
 import pandas as pd
 from collections import deque
+import time
 
 '''
 DEMO: band cross strategy
@@ -97,7 +98,7 @@ on market data,
     all market data from the source will be received. 
 '''
 def on_tick(context, md, source, rcv_time):
-    context.log_info("[FINISH] traded volume limit: ")
+    context.log_info("[FINISH] traded volume limit: " + str(md.LowerLimitPrice))
     context.log_info("[FINISH] traded volume limit: " + md.InstrumentID)
     #return
     
@@ -126,14 +127,19 @@ def on_tick(context, md, source, rcv_time):
                 context.rid = context.insert_limit_order(source=SOURCE_INDEX,
                                                          ticker=md.InstrumentID,
                                                          exchange_id=M_EXCHANGE,
-                                                         price = md.UpperLimitPrice - 100,
+                                                         price = md.LowerLimitPrice,
                                                          volume=context.signal.trade_size,
                                                          direction=DIRECTION.Buy,
                                                          offset=OFFSET.Open)
                 if context.rid > 0:
-                    context.trade_completed = False
-                    context.log_info("[insert_limit_order] order: " + str(TRADED_VOLUME_LIMIT))
-                    return
+					context.trade_completed = False
+					context.log_info("[insert_limit_order] order: " + str(md.LowerLimitPrice))
+					context.log_info("context.order_rid:" + str(context.rid))
+					context.log_info("will cancel it")
+					time.sleep(6)
+					context.cancel_id = context.cancel_order(source=SOURCE_INDEX, order_id=context.rid)
+					context.log_info("cancel (order_id) {} (request_id) {}" .format(context.rid, context.cancel_id))
+					return
 
             return
             if ShortEntryCondition and not context.signal.has_open_position:
