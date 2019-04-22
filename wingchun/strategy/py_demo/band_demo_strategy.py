@@ -25,8 +25,8 @@ by: xcao, qliu, cjiang
 '''
 
 SOURCE_INDEX = SOURCE.CTP
-M_TICKER = 'c1909,999001',
-M_TICKER2 = '999001';
+M_TICKER = 'c1909'
+M_TICKER2 = 'IH1905'
 
 M_EXCHANGE = EXCHANGE.SHFE
 TRADED_VOLUME_LIMIT = 500
@@ -57,7 +57,7 @@ initialization,
 def initialize(context):
     context.add_md(source=SOURCE_INDEX)
     context.add_td(source=SOURCE_INDEX)
-    context.subscribe([M_TICKER], source=SOURCE_INDEX)
+    context.subscribe([M_TICKER, M_TICKER2], source=SOURCE_INDEX)
     # necessary initialization of internal fields.
     context.td_connected = True
     context.trade_completed = True
