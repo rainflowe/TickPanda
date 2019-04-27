@@ -18,7 +18,6 @@ import numpy as np
 import pandas as pd
 from collections import deque
 import time
-import pandas as pd
 from RepeatedlyMacdChangeQuota_List import *
 import pymysql
 from pandas import DataFrame as dp
@@ -44,7 +43,7 @@ class signal():
 def run_test():
     conn = pymysql.connect(host='cd-cdb-na7tl8h1.sql.tencentcdb.com', port=63889, user='root', passwd='5!Pd!Lgy',
                            db='stock_data', charset='utf8')
-    # 创建游标
+    #
     cursor = conn.cursor()
     cursor.execute("select date,close,low from exc_hist_data limit 0,10000")
     data = dp(cursor)
