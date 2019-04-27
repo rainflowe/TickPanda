@@ -1,3 +1,6 @@
+#!/usr/local/env python3.6
+# -*- coding: UTF-8 -*-
+
 '''
 Copyright [2017] [taurus.ai]
 
@@ -43,7 +46,7 @@ class signal():
 def run_test():
     conn = pymysql.connect(host='cd-cdb-na7tl8h1.sql.tencentcdb.com', port=63889, user='root', passwd='5!Pd!Lgy',
                            db='stock_data', charset='utf8')
-    #
+    #cursor
     cursor = conn.cursor()
     cursor.execute("select date,close,low from exc_hist_data limit 0,10000")
     data = dp(cursor)
