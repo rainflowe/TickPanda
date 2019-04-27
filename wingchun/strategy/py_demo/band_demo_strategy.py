@@ -18,6 +18,11 @@ import numpy as np
 import pandas as pd
 from collections import deque
 import time
+import pandas as pd
+from RepeatedlyMacdChangeQuota_List import *
+import pymysql
+from pandas import DataFrame as dp
+
 
 '''
 DEMO: band cross strategy
@@ -35,6 +40,35 @@ TRADED_VOLUME_LIMIT = 500
 class signal():
     pass
 
+	
+def run_test():
+    conn = pymysql.connect(host='cd-cdb-na7tl8h1.sql.tencentcdb.com', port=63889, user='root', passwd='5!Pd!Lgy',
+                           db='stock_data', charset='utf8')
+    # 创建游标
+    cursor = conn.cursor()
+    cursor.execute("select date,close,low from exc_hist_data limit 0,10000")
+    data = dp(cursor)
+    columns = data.columns.size - 1
+    # dp.plot.area([0, 1])
+    data_array = data.values
+    dates = data_array[:, 0]
+    close = data_array[:, 1].astype("float64")
+    low = data.values[:, 2].astype("float64")
+    quota = PluguisRepeatedlyMacdChangeQuotaForList(500)
+    start = time.clock()
+    for i in range(0, len(close)):
+        _start_time = time.clock()
+        quota.calculate(close[i], low[i], dates[i])
+        print("now index is %s,status code is %s,time: %s" % (i, quota.status, (time.clock() - _start_time)))
+        if quota.status == 0:
+            array = quota.out_put()
+            print(array)
+            data1 = pd.DataFrame(array)
+            data1.to_csv('data1.csv')
+            return
+    end = time.clock()
+    print end - start	
+	
 def rolling_max(arr, period):
     return pd.rolling_max(arr, window=period)
 
@@ -74,7 +108,7 @@ def initialize(context):
     context.signal.has_open_long_position = False
     context.signal.has_open_short_position = False
     context.signal.trade_size = 1
-
+    run_test()
 '''
 callback when position is received
   if request_id > 0     this is callback of 'req_position',
@@ -100,8 +134,8 @@ on market data,
 def on_tick(context, md, source, rcv_time):
     context.log_info("[FINISH] traded volume limit: " + str(md.LowerLimitPrice))
     context.log_info("[FINISH] traded volume limit: " + md.InstrumentID)
-    #return
-    
+
+	
     if M_TICKER == md.InstrumentID and context.td_connected:
         context.signal.TickPrice.append(md.LastPrice)
         context.md_num += 1
