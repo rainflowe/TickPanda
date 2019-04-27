@@ -1,4 +1,4 @@
-#!/usr/local/env python3.6
+#!/usr/local/env python2.7
 # -*- coding: UTF-8 -*-
 
 '''
@@ -110,7 +110,7 @@ def initialize(context):
     context.signal.has_open_long_position = False
     context.signal.has_open_short_position = False
     context.signal.trade_size = 1
-    run_test()
+	run_test()
 '''
 callback when position is received
   if request_id > 0     this is callback of 'req_position',
