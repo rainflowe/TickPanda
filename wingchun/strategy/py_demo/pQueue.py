@@ -48,11 +48,12 @@ class myThread (threading.Thread):
     def run(self):
         print "Starting " + self.name
         while not exitFlag:
+            time.sleep(1)
             print ("data process begin, num: %d, time: %d" % (self.ctx.md_num, int(time.time())))
             for key in self.dict.getKeys():
                 print ("KEY %s, value  %s" % (key, self.dict.get(key).name))
 
-        time.sleep(2)
+        time.sleep(1)
         print "Exiting " + self.name
 
 class threadManager():
