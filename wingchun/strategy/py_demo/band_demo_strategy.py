@@ -21,7 +21,7 @@ import numpy as np
 import pandas as pd
 from collections import deque
 import time
-import pQueue
+from pQueue import *
 from RepeatedlyMacdChangeQuota_List import *
 import pymysql
 from pandas import DataFrame as dp
