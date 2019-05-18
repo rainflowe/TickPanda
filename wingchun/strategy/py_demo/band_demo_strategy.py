@@ -122,7 +122,7 @@ def on_pos(context, pos_handler, request_id, source, rcv_time):
             context.log_info("post_handler is none: ")
             context.req_pos(source=SOURCE.CTP)
     else:
-	    print '-- got pos in initial --'
+        print '-- got pos in initial --'
         context.print_pos(pos_handler)
         context.log_debug("[RSP_POS] {}".format(pos_handler.dump()))
         context.threadMgr.updateOrder('1234', 'ning')
