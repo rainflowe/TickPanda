@@ -1,3 +1,6 @@
+#!/usr/local/env python2.7
+# -*- coding: UTF-8 -*-
+
 '''
 Copyright [2017] [taurus.ai]
 
@@ -19,6 +22,9 @@ import pandas as pd
 from collections import deque
 import time
 import pQueue
+from RepeatedlyMacdChangeQuota_List import *
+import pymysql
+from pandas import DataFrame as dp
 
 '''
 DEMO: band cross strategy
@@ -36,6 +42,27 @@ TRADED_VOLUME_LIMIT = 500
 class signal():
     pass
 
+	
+def run_test():
+	dates = np.zeros(1000)
+	close = np.zeros(1000)
+	low = np.zeros(1000)
+	quota = PluguisRepeatedlyMacdChangeQuotaForList(500)
+	start = time.clock()
+	for i in range(0, len(close)):
+		_start_time = time.clock()
+		quota.calculate(close[i], low[i], dates[i])
+		print("now index is %s,status code is %s,time: %s" % (i, quota.status, (time.clock() - _start_time)))
+		if quota.status == 0:
+			array = quota.out_put()
+			print(array)
+			data1 = pd.DataFrame(array)
+			data1.to_csv('data1.csv')
+			return
+	end = time.clock()
+	print end - start
+
+	
 def rolling_max(arr, period):
     return pd.rolling_max(arr, window=period)
 
@@ -110,8 +137,8 @@ on market data,
 def on_tick(context, md, source, rcv_time):
     context.log_info("[FINISH] traded volume limit: " + str(md.LowerLimitPrice))
     context.log_info("[FINISH] traded volume limit: " + md.InstrumentID)
-    #return
-    
+
+	
     if M_TICKER == md.InstrumentID and context.td_connected:
         context.signal.TickPrice.append(md.LastPrice)
         context.md_num += 1
