@@ -49,8 +49,8 @@ class myThread (threading.Thread):
         print "Starting " + self.name
         while not exitFlag:
             print ("data process begin, num: %d" % (self.ctx.md_num))
-            for key in dict.getKeys():
-                print ("KEY %s, value  %s" % (key, dict.get(key).name))
+            for key in self.dict.getKeys():
+                print ("KEY %s, value  %s" % (key, self.dict.get(key).name))
 
         time.sleep(1)
         print "Exiting " + self.name
