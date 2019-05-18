@@ -119,8 +119,8 @@ def on_pos(context, pos_handler, request_id, source, rcv_time):
         context.threadMgr.updateOrder('1234', 'xiao')
         if pos_handler is None:
             context.set_pos(context.new_pos(source=source), source=source)
-			context.log_info("post_handler is none: ")
-			context.req_pos(source=SOURCE.CTP)
+            context.log_info("post_handler is none: ")
+            context.req_pos(source=SOURCE.CTP)
     else:
 	    print '-- got pos in initial --'
         context.print_pos(pos_handler)
