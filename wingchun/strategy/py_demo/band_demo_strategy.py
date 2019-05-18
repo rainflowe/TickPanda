@@ -91,6 +91,7 @@ def initialize(context):
     context.trade_completed = True
     context.md_num = 0
     context.traded_volume = 0
+    context.threadMgr = threadManager(context)
     #========= bind and initialize a signal ========
     context.signal = signal()
     context.signal.name = "sample_signal"
@@ -102,7 +103,6 @@ def initialize(context):
     context.signal.has_open_long_position = False
     context.signal.has_open_short_position = False
     context.signal.trade_size = 1
-    context.threadMgr = threadManager(context)
 
 '''
 callback when position is received

@@ -63,7 +63,7 @@ class threadManager():
         queueLock = threading.Lock()
     	thread = myThread('testThread', self.ctx, self.workQueue)
     	thread.start()
-        #thread.join
+        thread.join
 
     def updateOrder(self, rid, rname):
         print "add order"
