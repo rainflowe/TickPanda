@@ -46,7 +46,7 @@ class myThread (threading.Thread):
         self.name = name
 
     def run(self):
-        print "Starting " + self.name
+        print "Starting ==============================" + self.name
         while not exitFlag:
             time.sleep(1)
             print ("data process begin, num: %d, time: %d" % (self.ctx.md_num, int(time.time())))
@@ -66,10 +66,10 @@ class threadManager():
         thread.join
 
     def updateOrder(self, rid, rname):
-        print "add order"
+        print "add order " + rid
     	order = myOrder(rname, int(time.time()), rid)
     	self.workQueue.update(rid, order)
-
+        print "update workQueue " + rid
 
 #mgr = threadManager("abcd")
 #mgr.updateOrder('xiaon', "1234")
