@@ -18,6 +18,7 @@ import numpy as np
 import pandas as pd
 from collections import deque
 import time
+import pQueue
 
 '''
 DEMO: band cross strategy
@@ -74,6 +75,7 @@ def initialize(context):
     context.signal.has_open_long_position = False
     context.signal.has_open_short_position = False
     context.signal.trade_size = 1
+    context.threadMgr = threadManager(context)
 
 '''
 callback when position is received
@@ -86,10 +88,18 @@ def on_pos(context, pos_handler, request_id, source, rcv_time):
     if request_id == -1 and source == SOURCE_INDEX:
         context.td_connected = True
         context.log_info("td connected")
+        context.md_num = 10
+        context.threadMgr.updateOrder('1234', 'xiao')
         if pos_handler is None:
             context.set_pos(context.new_pos(source=source), source=source)
+			context.log_info("post_handler is none: ")
+			context.req_pos(source=SOURCE.CTP)
     else:
+	    print '-- got pos in initial --'
+        context.print_pos(pos_handler)
         context.log_debug("[RSP_POS] {}".format(pos_handler.dump()))
+        context.threadMgr.updateOrder('1234', 'ning')
+        context.md_num = 15
 
 '''
 on market data,
@@ -120,7 +130,7 @@ def on_tick(context, md, source, rcv_time):
         ExitCondition = (upper_band[-1] > md.LastPrice) and (lower_band[-1] < md.LastPrice)
         #============ generate signal ============
         if context.trade_completed:
-            if True:
+            if False:
                 context.log_debug("[insert_limit_order] (tick_price){} (upper_band){} (lower_band){}".format(
                             tick_price, upper_band, lower_band))
 
