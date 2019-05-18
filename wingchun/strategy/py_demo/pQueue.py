@@ -47,7 +47,7 @@ class myThread (threading.Thread):
 
     def run(self):
         print "Starting ==============================" + self.name
-        while not exitFlag:
+        while True:
             time.sleep(1)
             print ("data process begin, num: %d, time: %d" % (self.ctx.md_num, int(time.time())))
             for key in self.dict.getKeys():
