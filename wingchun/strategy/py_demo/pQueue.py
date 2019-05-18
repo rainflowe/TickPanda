@@ -48,11 +48,11 @@ class myThread (threading.Thread):
     def run(self):
         print "Starting " + self.name
         while not exitFlag:
-            print ("data process begin, num: %d" % (self.ctx.md_num))
+            print ("data process begin, num: %d, time: %d" % (self.ctx.md_num, int(time.time())))
             for key in self.dict.getKeys():
                 print ("KEY %s, value  %s" % (key, self.dict.get(key).name))
 
-        time.sleep(1)
+        time.sleep(2)
         print "Exiting " + self.name
 
 class threadManager():
@@ -62,7 +62,7 @@ class threadManager():
         queueLock = threading.Lock()
     	thread = myThread('testThread', self.ctx, self.workQueue)
     	thread.start()
-        thread.join
+        #thread.join
 
     def updateOrder(self, rid, rname):
         print "add order"
@@ -72,7 +72,7 @@ class threadManager():
 
 #mgr = threadManager("abcd")
 #mgr.updateOrder('xiaon', "1234")
- 
+
 '''
 threadList = ["Thread-1", "Thread-2", "Thread-3"]
 nameList = ["One", "Two", "Three", "Four", "Five"]
@@ -80,14 +80,14 @@ queueLock = threading.Lock()
 workQueue = Queue.Queue(10)
 threads = []
 threadID = 1
- 
+
 # 创建新线程
 for tName in threadList:
     thread = myThread(threadID, tName, workQueue)
     thread.start()
     threads.append(thread)
     threadID += 1
- 
+
 # 填充队列
 queueLock.acquire()
 #for word in nameList:
@@ -95,14 +95,14 @@ queueLock.acquire()
 order = myOrder("order1", int(time.time()), "r1234")
 workQueue.put(order)
 queueLock.release()
- 
+
 # 等待队列清空
 while not workQueue.empty():
     pass
- 
+
 # 通知线程是时候退出
 exitFlag = 1
- 
+
 # 等待所有线程完成
 for t in threads:
     t.join()
