@@ -62,7 +62,7 @@ class threadManager():
         self.workQueue = workDictionary()
         queueLock = threading.Lock()
     	thread = myThread('testThread', self.ctx, self.workQueue)
-        #thread.setDaemon(True)
+        thread.setDaemon(True)
     	thread.start()
 
     def updateOrder(self, rid, rname):
